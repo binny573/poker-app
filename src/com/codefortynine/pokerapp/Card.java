@@ -1,6 +1,8 @@
 package com.codefortynine.pokerapp;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,14 +20,14 @@ public class Card {
 	
 	public static final List<Card> hand1 = List.of(
 			new Card(CardSuit.H, CardValue.TWO), 
-			new Card(CardSuit.H, CardValue.THREE), new Card(CardSuit.H, CardValue.Q), 
-			new Card(CardSuit.H, CardValue.TWO),new Card(CardSuit.H, CardValue.Q)
+			new Card(CardSuit.C, CardValue.THREE), new Card(CardSuit.H, CardValue.TWO), 
+			new Card(CardSuit.C, CardValue.Q),new Card(CardSuit.H, CardValue.Q)
 			);
 
 	public static final List<Card> hand2 = List.of(
 			new Card(CardSuit.C, CardValue.TWO), 
-			new Card(CardSuit.C, CardValue.THREE), new Card(CardSuit.C, CardValue.FOUR), 
-			new Card(CardSuit.C, CardValue.Q),new Card(CardSuit.C, CardValue.EIGHT)
+			new Card(CardSuit.H, CardValue.FOUR), new Card(CardSuit.C, CardValue.FOUR), 
+			new Card(CardSuit.C, CardValue.Q),new Card(CardSuit.C, CardValue.FOUR)
 			);
 	
 
@@ -69,6 +71,10 @@ public class Card {
 		EvaluateHands evaluateHands = new EvaluateHands(hand1, hand2, numberOfHandCards);
 		String result = evaluateHands.determineWinner();
 		System.out.println(result);
+//		List<Integer> l = Arrays.asList(new Integer[]{4,5,9,1,2,3});
+//		System.out.println(l);
+//		Collections.sort(l);
+//		System.out.println(l);
 	}
 
 }

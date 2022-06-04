@@ -1,0 +1,124 @@
+package com.codefortynine.pokerapp;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class PokerHands {
+	
+	private static final String h1Win = "Congratulations Hand1 has won !!";
+	private static final String h2Win = "Congratulations Hand2 has won !!";
+	
+	private static final String straightFlushWin = "It was a Straight Flush poker hand !!";
+	private static final String fourOfAKindWin = "It was a Four of a Kind poker hand !!";
+	private static final String fullHouseWin = "It was a Full House poker hand !!";
+	private static final String flushWin = "It was a Flush poker hand !!";
+	private static final String straightWin = "It was a Straight poker hand !!";
+	private static final String threeOfAKindWin = "It was a Three of a Kind poker hand !!";
+	private static final String twoPairsWin = "It was a Two Pairs poker hand !!";
+	private static final String pairWin = "It was a Pair poker hand !!";
+	private static final String highCardWin = "It was a high Card poker hand !!";
+	
+	
+	public String straightFlush(
+			Boolean cs1FlushFlag, Boolean cs2FlushFlag,
+			List<Integer> hand1weights, List<Integer> hand2weights
+			) 
+	{
+//		System.out.println(cs1FlushFlag);
+//		System.out.println(cs2FlushFlag);
+		//check if values are consecutive ie return true or false if
+//Needs to be removed soon, and method flush() will be directly be called
+		if (cs1FlushFlag && cs2FlushFlag == false) 				return h1Win;
+			
+		else if (cs1FlushFlag == false && cs2FlushFlag) 		return h2Win;
+		
+		else if(cs1FlushFlag && cs2FlushFlag) {
+			return highCard(hand1weights, hand2weights);
+			//System.out.println("Card with highest value wins ie highest index in that map and then return a string");
+		}
+		else return null;
+			
+//		if()
+//		System.out.println("Success with Straight Flush");
+//		return true;
+//		else 
+//		System.out.println("Check for a lower category");
+//		return false;
+	}
+	public String fourOfAKind(Long maxValueCountcv1, Long maxValueCountcv2) {
+		System.out.println(maxValueCountcv1);
+		System.out.println( maxValueCountcv2);
+		if (maxValueCountcv1 == 4 && maxValueCountcv2 != 4) {
+			System.out.println(fourOfAKindWin);
+			return h1Win;
+		}
+		else if (maxValueCountcv1 != 4 && maxValueCountcv2 == 4) {
+			System.out.println(fourOfAKindWin);
+			return h2Win;
+		}
+		else if (maxValueCountcv1 == 4 && maxValueCountcv2 == 4) {
+			System.out.println(fourOfAKindWin);
+			System.out.println("Write logic to compare weights of those Card Values");
+		}
+		
+		return null;
+	}
+	public String fullHouse(Long maxValueCountcv1, Long maxValueCountcv2) {
+/*
+ * Need to check if remaining two are pairs
+ */
+		if (maxValueCountcv1 == 3 && maxValueCountcv2 != 3) {
+			System.out.println(fullHouseWin);
+			return h1Win;
+		}
+		else if (maxValueCountcv1 != 3 && maxValueCountcv2 == 3) {
+			System.out.println(fullHouseWin);
+			return h2Win;
+		}
+		else if (maxValueCountcv1 == 3 && maxValueCountcv2 == 3) {
+			System.out.println(fullHouseWin);
+			System.out.println("Write logic to compare weights of those Card Values");
+		}
+		return null;
+	}
+	public String flush(Boolean cs1FlushFlag, Boolean cs2FlushFlag,
+			List<Integer> hand1weights, List<Integer> hand2weights)
+	{
+		if (cs1FlushFlag && cs2FlushFlag == false) 				return h1Win;
+		
+		else if (cs1FlushFlag == false && cs2FlushFlag) 		return h2Win;
+		
+		else if(cs1FlushFlag && cs2FlushFlag) {
+			return highCard(hand1weights, hand2weights);
+			//System.out.println("Card with highest value wins ie highest index in that map and then return a string");
+		}
+		else return null;
+
+	}
+	public String straight() {
+
+		return null;
+	}
+	public String threeOfAKind() {
+
+		return null;
+	}
+	public String twoPairs() {
+
+		return null;
+	}
+	public String pair() {
+
+		return null;
+	}
+	public String highCard(List<Integer> hand1weights,List<Integer> hand2weights) {
+		System.out.println("High card was used");
+		if (Collections.max(hand1weights)>Collections.max(hand2weights)) return h1Win;
+		else if (Collections.max(hand2weights)>Collections.max(hand1weights)) return h2Win;
+		else {
+			return "wait";
+		}
+	}
+
+}

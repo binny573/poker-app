@@ -24,9 +24,6 @@ public class EvaluateHands {
 	private Boolean cs1FlushFlag = false;
 	private Boolean cs2FlushFlag = false;
 	
-	private static final String h1Win = "Congratulations Hand1 has won !!";
-	private static final String h2Win = "Congratulations Hand2 has won !!";
-	
 	private int numberOfHandCards;
 	
 	public EvaluateHands(List<Card> hand1, List<Card> hand2, int numberOfHandCards) {
@@ -46,36 +43,38 @@ public class EvaluateHands {
 		createListOfValues();
 		createListOfHandWeights();
 		setFlushFlag();
-		System.out.println(hand1weights);
-		System.out.println(hand2weights);	
+		Long maxValueCountcv1 = countMaxValueCount(cv1);
+		Long maxValueCountcv2 = countMaxValueCount(cv2);
+//		System.out.println(hand1weights);
+//		System.out.println(hand2weights);	
 //		String highCardOutput = highCard();
-		String output = straightFlush();
+		PokerHands pokerhands = new PokerHands();
+		String output = pokerhands.straightFlush(cs1FlushFlag, cs2FlushFlag, hand1weights, hand2weights);
 		if(output == null) {
-			output = fourOfAKind();
+			System.out.println("here");
+			output = pokerhands.fourOfAKind(maxValueCountcv1, maxValueCountcv2);
+		}
+		if(output == null) {
+			System.out.println("ajkshbdj");
+			output = pokerhands.fullHouse(maxValueCountcv1, maxValueCountcv2);
+		}
+		if(output == null) {
+			output = pokerhands.flush(cs1FlushFlag, cs2FlushFlag, hand1weights, hand2weights);
+		}
+		if(output == null) {
+			output = pokerhands.straight();
+		}
+		if(output == null) {
+			output = pokerhands.threeOfAKind();
+		}
+		if(output == null) {
+			output = pokerhands.twoPairs();
+		}
+		if(output == null) {
+			output = pokerhands.pair();
 		}
 		else if(output == null) {
-			output = fullHouse();
-		}
-		else if(output == null) {
-			output = fourOfAKind();
-		}
-		else if(output == null) {
-			output = flush();
-		}
-		else if(output == null) {
-			output = straight();
-		}
-		else if(output == null) {
-			output = threeOfAKind();
-		}
-		else if(output == null) {
-			output = twoPairs();
-		}
-		else if(output == null) {
-			output = pair();
-		}
-		else if(output == null) {
-			output = highCard();
+			output = pokerhands.highCard(hand1weights, hand2weights);
 		}
 		else if(output == null) {
 			output = "Some error in the cards";
@@ -85,10 +84,10 @@ public class EvaluateHands {
 		//String result = straightFlush();
 		//System.out.println(result); ---- print this and return from determine winner  
 		
-		System.out.println(listOfPossibleCardValues.indexOf(cv1.get(0)));
-		
-		if (cv1.get(1) == listOfPossibleCardValues.get(0)) System.out.println(true);
-		else System.out.println(false);
+//		System.out.println(listOfPossibleCardValues.indexOf(cv1.get(0)));
+//		
+//		if (cv1.get(1) == listOfPossibleCardValues.get(0)) System.out.println(true);
+//		else System.out.println(false);
 //		System.out.println(listOfPossibleCardValues);
 //		System.out.println(cs1FlushFlag);
 //		System.out.println(cs2FlushFlag);
@@ -112,6 +111,15 @@ public class EvaluateHands {
 		return output;
 	}
 	
+	private Long countMaxValueCount(List<CardValue> cv) {
+		Map<Object, Long> countOfCv =
+				cv.stream().collect(Collectors.groupingBy(e -> e, Collectors.counting()));
+
+		Long maxValueCount = Collections.max(countOfCv.values());
+		//return the weight which is repeated maximum times
+		return maxValueCount;
+	}
+
 	private void createListOfHandWeights() {
 		// TODO Auto-generated method stub
 		for (CardValue cardSuit : cv1) {
@@ -169,62 +177,5 @@ public class EvaluateHands {
 		}
 	}
 
-	
-	public String straightFlush() {
-//		System.out.println(cs1FlushFlag);
-//		System.out.println(cs2FlushFlag);
-		if (cs1FlushFlag && cs2FlushFlag == false) 				return h1Win;
-			
-		else if (cs1FlushFlag == false && cs2FlushFlag) 		return h2Win;
-		
-		else if(cs1FlushFlag && cs2FlushFlag) {
-			return highCard();
-			//System.out.println("Card with highest value wins ie highest index in that map and then return a string");
-		}
-		else return null;
-			
-//		if()
-//		System.out.println("Success with Straight Flush");
-//		return true;
-//		else 
-//		System.out.println("Check for a lower category");
-//		return false;
-	}
-	public String fourOfAKind() {
-
-		return null;
-	}
-	public String fullHouse() {
-
-		return null;
-	}
-	public String flush() {
-
-		return null;
-	}
-	public String straight() {
-
-		return null;
-	}
-	public String threeOfAKind() {
-
-		return null;
-	}
-	public String twoPairs() {
-
-		return null;
-	}
-	public String pair() {
-
-		return null;
-	}
-	public String highCard() {
-		System.out.println("High card was used");
-		if (Collections.max(hand1weights)>Collections.max(hand2weights)) return h1Win;
-		else if (Collections.max(hand2weights)>Collections.max(hand1weights)) return h2Win;
-		else {
-			return "wait";
-		}
-	}
 
 }
