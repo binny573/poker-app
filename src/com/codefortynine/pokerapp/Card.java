@@ -1,6 +1,8 @@
 package com.codefortynine.pokerapp;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Card {
 	
@@ -16,14 +18,14 @@ public class Card {
 	
 	public static final List<Card> hand1 = List.of(
 			new Card(CardSuit.H, CardValue.TWO), 
-			new Card(CardSuit.C, CardValue.THREE), new Card(CardSuit.H, CardValue.Q), 
-			new Card(CardSuit.H, CardValue.SIX),new Card(CardSuit.H, CardValue.Q)
+			new Card(CardSuit.H, CardValue.THREE), new Card(CardSuit.H, CardValue.Q), 
+			new Card(CardSuit.H, CardValue.TWO),new Card(CardSuit.H, CardValue.Q)
 			);
 
 	public static final List<Card> hand2 = List.of(
 			new Card(CardSuit.C, CardValue.TWO), 
-			new Card(CardSuit.C, CardValue.THREE), new Card(CardSuit.C, CardValue.Q), 
-			new Card(CardSuit.C, CardValue.SIX),new Card(CardSuit.C, CardValue.EIGHT)
+			new Card(CardSuit.C, CardValue.THREE), new Card(CardSuit.C, CardValue.FOUR), 
+			new Card(CardSuit.C, CardValue.Q),new Card(CardSuit.C, CardValue.EIGHT)
 			);
 	
 
@@ -65,9 +67,8 @@ public class Card {
 //		System.out.println(i);
 
 		EvaluateHands evaluateHands = new EvaluateHands(hand1, hand2, numberOfHandCards);
-		evaluateHands.determineWinner();
-		 
-
+		String result = evaluateHands.determineWinner();
+		System.out.println(result);
 	}
 
 }
