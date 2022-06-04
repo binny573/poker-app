@@ -1,6 +1,7 @@
 package com.codefortynine.pokerapp;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -13,6 +14,9 @@ public class EvaluateHands {
 	private List<CardSuit> cs2 = new ArrayList<CardSuit>();
 	private List<CardValue> cv1 = new ArrayList<CardValue>();
 	private List<CardValue> cv2 = new ArrayList<CardValue>();
+	
+	private Boolean cs1FlushFlag = false;
+	private Boolean cs2FlushFlag = false;
 	
 	private static final String h1Win = "Congratulations Hand1 has won !!";
 	private static final String h2Win = "Congratulations Hand2 has won !!";
@@ -33,15 +37,27 @@ public class EvaluateHands {
 	public String determineWinner() {
 		createListOfSuits();
 		createListOfValues();
+		setFlushFlag();
+		System.out.println(cs1FlushFlag);
+		System.out.println(cs2FlushFlag);
 		//HashMap<CarSuit, int> frequncymap = getCountOfUnqiueSuits();
 		
-		Map<Object, Long> countOfcs1 =
-				cs1.stream().collect(Collectors.groupingBy(e -> e, Collectors.counting()));
-		Map<Object, Long> countOfcs2 =
-				cs2.stream().collect(Collectors.groupingBy(e -> e, Collectors.counting()));
+				
+//		Long maxSuitCountcs1 = Collections.max(countOfcs1.values());
+//		Long maxSuitCountcs2 = Collections.max(countOfcs2.values());
+//		System.out.println("Card suit1 " + countOfcs1);
+//		System.out.println("Card suit2 " + countOfcs2);
 
-		System.out.println(countOfcs1);
-		System.out.println(countOfcs2);
+//		System.out.println(maxSuitCountcs1);
+//		System.out.println(maxSuitCountcs2);
+		
+		Map<Object, Long> countOfcv1 =
+				cv1.stream().collect(Collectors.groupingBy(e -> e, Collectors.counting()));
+		Map<Object, Long> countOfcv2 =
+				cv2.stream().collect(Collectors.groupingBy(e -> e, Collectors.counting()));
+		
+//		System.out.println("Card value1 "+ countOfcv1);
+//		System.out.println("Card value2 "+ countOfcv2);
 		//if(straightFlush()==true) 
 		
 		//System.out.println(n);
@@ -51,6 +67,18 @@ public class EvaluateHands {
 	}
 	
 	//public Hashmap
+	
+	public void setFlushFlag() {
+		Map<Object, Long> countOfcs1 =
+				cs1.stream().collect(Collectors.groupingBy(e -> e, Collectors.counting()));
+		Map<Object, Long> countOfcs2 =
+				cs2.stream().collect(Collectors.groupingBy(e -> e, Collectors.counting()));
+
+		Long maxSuitCountcs1 = Collections.max(countOfcs1.values());
+		Long maxSuitCountcs2 = Collections.max(countOfcs2.values());
+		if(maxSuitCountcs1 == 5) cs1FlushFlag = true;
+		if(maxSuitCountcs2 == 5) cs2FlushFlag = true;
+	}
 	
 	public void createListOfSuits() {
 		for (int i = 0; i < numberOfHandCards; i++) 			

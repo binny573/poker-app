@@ -16,14 +16,14 @@ public class Card {
 	
 	public static final List<Card> hand1 = List.of(
 			new Card(CardSuit.H, CardValue.TWO), 
-			new Card(CardSuit.H, CardValue.THREE), new Card(CardSuit.H, CardValue.Q), 
-			new Card(CardSuit.H, CardValue.SIX),new Card(CardSuit.H, CardValue.NINE)
+			new Card(CardSuit.D, CardValue.THREE), new Card(CardSuit.H, CardValue.Q), 
+			new Card(CardSuit.H, CardValue.SIX),new Card(CardSuit.H, CardValue.Q)
 			);
 
 	public static final List<Card> hand2 = List.of(
 			new Card(CardSuit.C, CardValue.TWO), 
-			new Card(CardSuit.C, CardValue.THREE), new Card(CardSuit.D, CardValue.Q), 
-			new Card(CardSuit.D, CardValue.SIX),new Card(CardSuit.H, CardValue.EIGHT)
+			new Card(CardSuit.C, CardValue.THREE), new Card(CardSuit.C, CardValue.Q), 
+			new Card(CardSuit.C, CardValue.SIX),new Card(CardSuit.C, CardValue.EIGHT)
 			);
 	
 
