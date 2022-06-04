@@ -16,7 +16,7 @@ public class Card {
 	
 	public static final List<Card> hand1 = List.of(
 			new Card(CardSuit.H, CardValue.TWO), 
-			new Card(CardSuit.D, CardValue.THREE), new Card(CardSuit.H, CardValue.Q), 
+			new Card(CardSuit.C, CardValue.THREE), new Card(CardSuit.H, CardValue.Q), 
 			new Card(CardSuit.H, CardValue.SIX),new Card(CardSuit.H, CardValue.Q)
 			);
 
@@ -63,6 +63,7 @@ public class Card {
 //			}			
 //		}
 //		System.out.println(i);
+
 		EvaluateHands evaluateHands = new EvaluateHands(hand1, hand2, numberOfHandCards);
 		evaluateHands.determineWinner();
 		 

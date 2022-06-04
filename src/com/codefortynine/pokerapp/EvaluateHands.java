@@ -10,6 +10,8 @@ public class EvaluateHands {
 	
 	private List<Card> hand1;
 	private List<Card> hand2;
+	private List<CardValue> listOfPossibleCardValues = new ArrayList<>();
+	
 	private List<CardSuit> cs1 = new ArrayList<CardSuit>();
 	private List<CardSuit> cs2 = new ArrayList<CardSuit>();
 	private List<CardValue> cv1 = new ArrayList<CardValue>();
@@ -35,11 +37,18 @@ public class EvaluateHands {
 	Methods return 
 	 */
 	public String determineWinner() {
+		createListofPossibleValues(); 
 		createListOfSuits();
 		createListOfValues();
 		setFlushFlag();
-		System.out.println(cs1FlushFlag);
-		System.out.println(cs2FlushFlag);
+		String result = straightFlush();
+		System.out.println(result);
+		
+		if (cv1.get(1) == listOfPossibleCardValues.get(0)) System.out.println(true);
+		else System.out.println(false);
+//		System.out.println(listOfPossibleCardValues);
+//		System.out.println(cs1FlushFlag);
+//		System.out.println(cs2FlushFlag);
 		//HashMap<CarSuit, int> frequncymap = getCountOfUnqiueSuits();
 		
 				
@@ -66,6 +75,13 @@ public class EvaluateHands {
 		return null;
 	}
 	
+	private void createListofPossibleValues() {
+		for (CardValue cardValue : CardValue.values()) { 
+			listOfPossibleCardValues.add(cardValue);
+		}
+		
+	}
+
 	//public Hashmap
 	
 	public void setFlushFlag() {
@@ -76,36 +92,48 @@ public class EvaluateHands {
 
 		Long maxSuitCountcs1 = Collections.max(countOfcs1.values());
 		Long maxSuitCountcs2 = Collections.max(countOfcs2.values());
+		System.out.println(maxSuitCountcs1);
 		if(maxSuitCountcs1 == 5) cs1FlushFlag = true;
 		if(maxSuitCountcs2 == 5) cs2FlushFlag = true;
 	}
 	
 	public void createListOfSuits() {
-		for (int i = 0; i < numberOfHandCards; i++) 			
-			cs1.add(hand1.get(i).getSuit());
+		for (int i = 0; i < this.numberOfHandCards; i++) 			
+			cs1.add(this.hand1.get(i).getSuit());
 		
-		for (int i = 0; i < numberOfHandCards; i++) 
-			cs2.add(hand2.get(i).getSuit());
+		for (int i = 0; i < this.numberOfHandCards; i++) 
+			cs2.add(this.hand2.get(i).getSuit());
 	}
 	public void createListOfValues() {
-		for (int s = 0; s < numberOfHandCards; s++) {
-			cv1.add(hand1.get(s).getValue());
+		for (int s = 0; s < this.numberOfHandCards; s++) {
+			cv1.add(this.hand1.get(s).getValue());
 		}
-		for (int s = 0; s < numberOfHandCards; s++) {
-			cv2.add(hand2.get(s).getValue());
+		for (int s = 0; s < this.numberOfHandCards; s++) {
+			cv2.add(this.hand2.get(s).getValue());
 		
 		}
 	}
 
 	
-	public Boolean straightFlush() {
+	public String straightFlush() {
+//		System.out.println(cs1FlushFlag);
+//		System.out.println(cs2FlushFlag);
+		if (cs1FlushFlag && cs2FlushFlag == false) {
+				return h1Win;
+			}
+		else if (cs1FlushFlag ==false && cs2FlushFlag ) {
+			return h2Win;
+		}
+		
+		
+			
 //		if()
 //		System.out.println("Success with Straight Flush");
 //		return true;
 //		else 
 //		System.out.println("Check for a lower category");
 //		return false;
-		return true;
+		return null;
 	}
 	public Boolean fourOfAKind() {
 
