@@ -71,10 +71,7 @@ public class Card {
 		EvaluateHands evaluateHands = new EvaluateHands(hand1, hand2, numberOfHandCards);
 		String result = evaluateHands.determineWinner();
 		System.out.println(result);
-//		List<Integer> l = Arrays.asList(new Integer[]{4,5,9,1,2,3});
-//		System.out.println(l);
-//		Collections.sort(l);
-//		System.out.println(l);
+
 	}
 
 }

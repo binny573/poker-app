@@ -66,7 +66,7 @@ public class PokerHands {
 	}
 	public String fullHouse(Long maxValueCountcv1, Long maxValueCountcv2) {
 /*
- * Need to check if remaining two are pairs
+ * Need to check if remaining two are pairs then only works
  */
 		if (maxValueCountcv1 == 3 && maxValueCountcv2 != 3) {
 			System.out.println(fullHouseWin);

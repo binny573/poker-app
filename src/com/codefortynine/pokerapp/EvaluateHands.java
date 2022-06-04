@@ -2,6 +2,7 @@ package com.codefortynine.pokerapp;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -116,6 +117,25 @@ public class EvaluateHands {
 				cv.stream().collect(Collectors.groupingBy(e -> e, Collectors.counting()));
 
 		Long maxValueCount = Collections.max(countOfCv.values());
+		// 5 is not possible because only eg. 4 Aces exist in a deck
+		if (maxValueCount == 4)
+		{
+		//Add code to create a Map that will add key to that weight	
+		}
+		else if (maxValueCount == 3)
+		{
+		//Add code to create a Map that will add key to that weight		
+		}
+		else if (maxValueCount == 2)
+		{
+			
+		}
+		else if (maxValueCount == 1) {
+				
+			}
+		for (Map.Entry<Object, Long> entry : countOfCv.entrySet()) {
+				    System.out.println("Key " + entry.getKey() + " Value " + entry.getValue());
+			}
 		//return the weight which is repeated maximum times
 		return maxValueCount;
 	}
@@ -130,7 +150,6 @@ public class EvaluateHands {
 //			System.out.println(listOfPossibleCardValues.indexOf(cardSuit));
 			hand2weights.add(listOfPossibleCardValues.indexOf(cardSuit));
 		}
-		
 	}
 
 	private void createListOfPossibleValues() {
@@ -141,7 +160,7 @@ public class EvaluateHands {
 	}
 
 	//public Hashmap
-	
+	//not redundant cz we deal in CardSuits here and not CardValue
 	public void setFlushFlag() {
 		Map<Object, Long> countOfcs1 =
 				cs1.stream().collect(Collectors.groupingBy(e -> e, Collectors.counting()));
