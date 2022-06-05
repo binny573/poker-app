@@ -2,9 +2,11 @@ package com.codefortynine.pokerapp;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class EvaluateHands {
@@ -42,76 +44,110 @@ public class EvaluateHands {
 		createListOfPossibleValues(); 
 		createListOfSuits();
 		createListOfValues();
-		createListOfHandWeights();
-		setFlushFlag();
-		Long maxValueCountcv1 = countMaxValueCount(cv1);
-		Long maxValueCountcv2 = countMaxValueCount(cv2);
-//		System.out.println(hand1weights);
-//		System.out.println(hand2weights);	
-//		String highCardOutput = highCard();
-		PokerHands pokerhands = new PokerHands();
-		String output = pokerhands.straightFlush(cs1FlushFlag, cs2FlushFlag, hand1weights, hand2weights);
-		if(output == null) {
-			System.out.println("here");
-			output = pokerhands.fourOfAKind(maxValueCountcv1, maxValueCountcv2);
-		}
-		if(output == null) {
-			System.out.println("ajkshbdj");
-			output = pokerhands.fullHouse(maxValueCountcv1, maxValueCountcv2);
-		}
-		if(output == null) {
-			output = pokerhands.flush(cs1FlushFlag, cs2FlushFlag, hand1weights, hand2weights);
-		}
-		if(output == null) {
-			output = pokerhands.straight();
-		}
-		if(output == null) {
-			output = pokerhands.threeOfAKind();
-		}
-		if(output == null) {
-			output = pokerhands.twoPairs();
-		}
-		if(output == null) {
-			output = pokerhands.pair();
-		}
-		else if(output == null) {
-			output = pokerhands.highCard(hand1weights, hand2weights);
-		}
-		else if(output == null) {
-			output = "Some error in the cards";
-		}
-		
-		
-		//String result = straightFlush();
-		//System.out.println(result); ---- print this and return from determine winner  
-		
-//		System.out.println(listOfPossibleCardValues.indexOf(cv1.get(0)));
-//		
-//		if (cv1.get(1) == listOfPossibleCardValues.get(0)) System.out.println(true);
-//		else System.out.println(false);
-//		System.out.println(listOfPossibleCardValues);
-//		System.out.println(cs1FlushFlag);
-//		System.out.println(cs2FlushFlag);
-		//HashMap<CarSuit, int> frequncymap = getCountOfUnqiueSuits();
-		
-//		Long maxSuitCountcs1 = Collections.max(countOfcs1.values());
-//		Long maxSuitCountcs2 = Collections.max(countOfcs2.values());
-//		System.out.println("Card suit1 " + countOfcs1);
-//		System.out.println("Card suit2 " + countOfcs2);
+		System.out.println(listOfPossibleCardValues);
+		System.out.println(listOfPossibleCardValues.indexOf(CardValue.FIVE));
+		Map<Object, CountWeight> keyCountWeightMapcv1 = getKeyCountWeighteMap(cv1);
+		Map<Object, CountWeight> keyCountWeightMapcv2 = getKeyCountWeighteMap(cv2);
+		System.out.println("Count " + keyCountWeightMapcv2.get(CardValue.TWO).getCount());
+		System.out.println("Weight " + keyCountWeightMapcv2.get(CardValue.TWO).getWeight());
 
-//		System.out.println(maxSuitCountcs1);
-//		System.out.println(maxSuitCountcs2);
-		
-		Map<Object, Long> countOfcv1 =
-				cv1.stream().collect(Collectors.groupingBy(e -> e, Collectors.counting()));
-		Map<Object, Long> countOfcv2 =
-				cv2.stream().collect(Collectors.groupingBy(e -> e, Collectors.counting()));
-		
-		//System.out.println("Card value1 "+ countOfcv1);
-		//System.out.println("Card value2 "+ countOfcv2);
-		return output;
+//		createListOfHandWeights();
+//		setFlushFlag();
+//		Long maxValueCountcv1 = countMaxValueCount(cv1);
+//		Long maxValueCountcv2 = countMaxValueCount(cv2);
+////		System.out.println(hand1weights);
+////		System.out.println(hand2weights);	
+////		String highCardOutput = highCard();
+//		PokerHands pokerhands = new PokerHands();
+//		String output = pokerhands.straightFlush(cs1FlushFlag, cs2FlushFlag, hand1weights, hand2weights);
+//		if(output == null) {
+//			System.out.println("here");
+//			output = pokerhands.fourOfAKind(maxValueCountcv1, maxValueCountcv2);
+//		}
+//		if(output == null) {
+//			System.out.println("ajkshbdj");
+//			output = pokerhands.fullHouse(maxValueCountcv1, maxValueCountcv2);
+//		}
+//		if(output == null) {
+//			output = pokerhands.flush(cs1FlushFlag, cs2FlushFlag, hand1weights, hand2weights);
+//		}
+//		if(output == null) {
+//			output = pokerhands.straight();
+//		}
+//		if(output == null) {
+//			output = pokerhands.threeOfAKind();
+//		}
+//		if(output == null) {
+//			output = pokerhands.twoPairs();
+//		}
+//		if(output == null) {
+//			output = pokerhands.pair();
+//		}
+//		if(output == null) {
+//			output = pokerhands.highCard(hand1weights, hand2weights);
+//		}
+//		if(output == null) {
+//			output = "Some error in the cards";
+//		}
+//		
+//		
+//		//String result = straightFlush();
+//		//System.out.println(result); ---- print this and return from determine winner  
+//		
+////		System.out.println(listOfPossibleCardValues.indexOf(cv1.get(0)));
+////		
+////		if (cv1.get(1) == listOfPossibleCardValues.get(0)) System.out.println(true);
+////		else System.out.println(false);
+////		System.out.println(listOfPossibleCardValues);
+////		System.out.println(cs1FlushFlag);
+////		System.out.println(cs2FlushFlag);
+//		//HashMap<CarSuit, int> frequncymap = getCountOfUnqiueSuits();
+//		
+////		Long maxSuitCountcs1 = Collections.max(countOfcs1.values());
+////		Long maxSuitCountcs2 = Collections.max(countOfcs2.values());
+////		System.out.println("Card suit1 " + countOfcs1);
+////		System.out.println("Card suit2 " + countOfcs2);
+//
+////		System.out.println(maxSuitCountcs1);
+////		System.out.println(maxSuitCountcs2);
+//		
+//		Map<Object, Long> countOfcv1 =
+//				cv1.stream().collect(Collectors.groupingBy(e -> e, Collectors.counting()));
+//		Map<Object, Long> countOfcv2 =
+//				cv2.stream().collect(Collectors.groupingBy(e -> e, Collectors.counting()));
+//		
+//		System.out.println("Card value1 "+ countOfcv1);
+//		System.out.println("Card value2 "+ countOfcv2);
+		return null;
+//		return output;
 	}
 	
+	private Map<Object, CountWeight> getKeyCountWeighteMap(List<CardValue> cv) {
+		Map<Object, Long> countOfCv =
+				cv.stream().collect(Collectors.groupingBy(e -> e, Collectors.counting()));
+		System.out.println(countOfCv);
+
+		Map<Object, CountWeight> keyCountValueMap = new HashMap<Object, CountWeight>();
+		for (int i = 1; i<=4; i++) {
+			for(Entry<Object, Long> entry: countOfCv.entrySet()) {
+				CountWeight countWeight = new CountWeight();
+				if(entry.getValue() == i) {
+			        System.out.println("The key for value " + i + " is " + entry.getKey());
+			        Long count = entry.getValue();
+			        int weight = listOfPossibleCardValues.indexOf(entry.getKey());
+			        System.out.println(weight);
+			        countWeight.setCount(count);
+			        countWeight.setWeight(weight);
+			        keyCountValueMap.put(entry.getKey(), countWeight);
+			        //Something like K,4, 11....ie K occurs 4 times and has weight 12
+			      }
+
+			}		
+		}
+		return keyCountValueMap;
+	}
+		
+
 	private Long countMaxValueCount(List<CardValue> cv) {
 		Map<Object, Long> countOfCv =
 				cv.stream().collect(Collectors.groupingBy(e -> e, Collectors.counting()));
@@ -120,7 +156,12 @@ public class EvaluateHands {
 		// 5 is not possible because only eg. 4 Aces exist in a deck
 		if (maxValueCount == 4)
 		{
-		//Add code to create a Map that will add key to that weight	
+			for(Entry<Object, Long> entry: countOfCv.entrySet()) {
+			      if(entry.getValue() == maxValueCount) {
+			        System.out.println("The key for value " + maxValueCount + " is " + entry.getKey());
+			      }
+			}
+			
 		}
 		else if (maxValueCount == 3)
 		{
@@ -131,10 +172,10 @@ public class EvaluateHands {
 			
 		}
 		else if (maxValueCount == 1) {
-				
+				//Guess also not needed
 			}
 		for (Map.Entry<Object, Long> entry : countOfCv.entrySet()) {
-				    System.out.println("Key " + entry.getKey() + " Value " + entry.getValue());
+//				    System.out.println("Key " + entry.getKey() + " Value " + entry.getValue());
 			}
 		//return the weight which is repeated maximum times
 		return maxValueCount;
@@ -142,13 +183,13 @@ public class EvaluateHands {
 
 	private void createListOfHandWeights() {
 		// TODO Auto-generated method stub
-		for (CardValue cardSuit : cv1) {
+		for (CardValue cardValue : cv1) {
 //			System.out.println(listOfPossibleCardValues.indexOf(cardSuit));
-			hand1weights.add(listOfPossibleCardValues.indexOf(cardSuit));
+			hand1weights.add(listOfPossibleCardValues.indexOf(cardValue));
 		}
-		for (CardValue cardSuit : cv2) {
+		for (CardValue cardValue : cv2) {
 //			System.out.println(listOfPossibleCardValues.indexOf(cardSuit));
-			hand2weights.add(listOfPossibleCardValues.indexOf(cardSuit));
+			hand2weights.add(listOfPossibleCardValues.indexOf(cardValue));
 		}
 	}
 
@@ -187,13 +228,9 @@ public class EvaluateHands {
 			cs2.add(this.hand2.get(i).getSuit());
 	}
 	public void createListOfValues() {
-		for (int s = 0; s < this.numberOfHandCards; s++) {
-			cv1.add(this.hand1.get(s).getValue());
-		}
-		for (int s = 0; s < this.numberOfHandCards; s++) {
-			cv2.add(this.hand2.get(s).getValue());
-		
-		}
+		for (int s = 0; s < this.numberOfHandCards; s++) 	cv1.add(this.hand1.get(s).getValue());
+		for (int s = 0; s < this.numberOfHandCards; s++)	cv2.add(this.hand2.get(s).getValue());
+		//System.out.println(cv1);
 	}
 
 
