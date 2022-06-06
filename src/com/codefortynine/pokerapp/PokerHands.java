@@ -2,7 +2,9 @@ package com.codefortynine.pokerapp;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 public class PokerHands {
 	
@@ -86,25 +88,64 @@ public class PokerHands {
 		
 		return null;
 	}
-	public String fullHouse(Long maxValueCountcv1, Long maxValueCountcv2) {
+	public String fullHouse(Long maxValueCountcv1, Long maxValueCountcv2, Set<Object> hand1PairValues, Set<Object> hand2PairValues,
+			Set<Object> hand1TripletValue, Set<Object> hand2TripletValue, List<CardValue> listOfPossibleCardValues) {
 /*
  * Need to check if remaining two are pairs then only works
- */if (false) {
-		if (maxValueCountcv1 == 3 && maxValueCountcv2 != 3) {
+ * 
+	 */	Object setToEnum1 = null;
+		Object setToEnum2 = null;
+		
+		for (Iterator<Object> it = hand1TripletValue.iterator(); it.hasNext(); ) 
+			setToEnum1 = it.next();
+		
+		for (Iterator<Object> it = hand2TripletValue.iterator(); it.hasNext(); ) 
+			setToEnum2 = it.next();
+		   
+//		System.out.println(hand1TripletValue);
+		int hand1TripletWeight = listOfPossibleCardValues.indexOf(setToEnum1);
+//		System.out.println(hand1TripletWeight);
+		
+		System.out.println(hand2TripletValue);
+		int hand2TripletWeight = listOfPossibleCardValues.indexOf(setToEnum2);
+//		System.out.println(hand2TripletWeight);
+		
+//		System.out.println("jkahsbndkjsan");
+//		System.out.println(maxValueCountcv1);
+//		System.out.println(maxValueCountcv2);
+//		System.out.println(hand1TripletWeight);
+//		System.out.println(hand2TripletWeight);
+//		System.out.println("zingaaa");
+//		System.out.println(hand1PairValues);
+//		System.out.println(hand2PairValues);
+		if (maxValueCountcv1 == 3 && maxValueCountcv2 != 3 && !hand1PairValues.isEmpty()) {
 			System.out.println(fullHouseWin);
 			return h1Win;
 		}
-		else if (maxValueCountcv1 != 3 && maxValueCountcv2 == 3) {
+		else if (maxValueCountcv1 != 3 && maxValueCountcv2 == 3 && !hand2PairValues.isEmpty()) {
 			System.out.println(fullHouseWin);
 			return h2Win;
 		}
 		else if (maxValueCountcv1 == 3 && maxValueCountcv2 == 3) {
-			System.out.println(fullHouseWin);
-			System.out.println("Write logic to compare weights of those Card Values");
+			if(!hand1PairValues.isEmpty() && hand2PairValues.isEmpty()) {
+				System.out.println(fullHouseWin);
+				return h1Win;
+			}
+			else if(!hand2PairValues.isEmpty() && hand1PairValues.isEmpty()) {
+				System.out.println(fullHouseWin);
+				return h2Win;
+			}
+			else if (!hand1PairValues.isEmpty() && !hand2PairValues.isEmpty())
+				if(hand1TripletWeight>hand2TripletWeight) {
+					System.out.println(fullHouseWin);
+					return h1Win;
+				}
+				else if (hand2TripletWeight>hand1TripletWeight) {
+					System.out.println(fullHouseWin);
+					return h2Win;
+				}	
 		}
 		return null;
-	}
- return null;
 	}
 	
 	public String flush(Boolean cs1FlushFlag, Boolean cs2FlushFlag,

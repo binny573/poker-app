@@ -3,10 +3,13 @@ package com.codefortynine.pokerapp;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class EvaluateHands {
@@ -51,6 +54,15 @@ public class EvaluateHands {
 	This method prints whether hand1 won on hand2
 	Methods return 
 	 */
+	public static Set<Object> getValueFornOccurrences(Map<Object, Long> map, Long value) {
+	    Set<Object> keys = new HashSet<Object>();
+	    for (Entry<Object, Long> entry : map.entrySet()) {
+	        if (Objects.equals(value, entry.getValue())) {
+	            keys.add(entry.getKey());
+	        }
+	    }
+	    return keys;
+	}
 	public String determineWinner() {
 //		System.out.println(listOfPossibleCardValues);
 //		System.out.println(listOfPossibleCardValues.indexOf(CardValue.FIVE));
@@ -60,6 +72,18 @@ public class EvaluateHands {
 //		System.out.println("Weight " + keyCountWeightMapcv2.get(CardValue.FOUR).getWeight());
 		Map<Object, Long> cardValueCount1 = getCardValueCount(cv1);
 		Map<Object, Long> cardValueCount2 = getCardValueCount(cv2);
+		
+		Set<Object> hand1PairValues = (Set<Object>) getValueFornOccurrences(cardValueCount1, Long.valueOf(2));
+		Set<Object> hand2PairValues = (Set<Object>) getValueFornOccurrences(cardValueCount2, Long.valueOf(2));
+		
+		Set<Object> hand1TripletValue = (Set<Object>) getValueFornOccurrences(cardValueCount1, Long.valueOf(3));
+		Set<Object> hand2TripletValue = (Set<Object>) getValueFornOccurrences(cardValueCount2, Long.valueOf(3));
+				
+//		System.out.println(hand1PairValues);
+//		System.out.println(hand1pairValues.isEmpty());
+//		System.out.println(hand2PairValues);
+//		System.out.println(hand2pairValues.isEmpty());
+//		
 		Long maxValueCountcv1 = getMaxValueCount(cardValueCount1);
 		Long maxValueCountcv2 = getMaxValueCount(cardValueCount2);
 //		System.out.println(hand1weights);
@@ -77,7 +101,8 @@ public class EvaluateHands {
 					maxValueCountcv1, maxValueCountcv2, maxOccurredWeightcv1, maxOccurredWeightcv2);
 		}
 		if(output == null) {
-			output = pokerhands.fullHouse(maxValueCountcv1, maxValueCountcv2);
+			output = pokerhands.fullHouse(maxValueCountcv1, maxValueCountcv2, hand1PairValues, hand2PairValues,
+					hand1TripletValue, hand2TripletValue, listOfPossibleCardValues);
 		}
 		if(output == null) {
 			output = pokerhands.flush(cs1FlushFlag, cs2FlushFlag, hand1weights, hand2weights);

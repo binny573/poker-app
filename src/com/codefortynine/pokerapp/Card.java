@@ -20,16 +20,16 @@ public class Card {
 		this.value = value;
 	}
 	
-	public static final List<Card> hand1 = List.of(
-			new Card(CardSuit.S, CardValue.FOUR),
-			new Card(CardSuit.H, CardValue.TWO), new Card(CardSuit.S, CardValue.SEVEN), 
-			new Card(CardSuit.S, CardValue.TWO),new Card(CardSuit.S, CardValue.NINE)
+	public static List<Card> hand1 = List.of(
+			new Card(CardSuit.C, CardValue.K),
+			new Card(CardSuit.H, CardValue.K), new Card(CardSuit.H, CardValue.EIGHT), 
+			new Card(CardSuit.D, CardValue.K),new Card(CardSuit.S, CardValue.EIGHT)
 			);
 
-	public static final List<Card> hand2 = List.of(
-			new Card(CardSuit.H, CardValue.FIVE),
-			new Card(CardSuit.D, CardValue.T), new Card(CardSuit.H, CardValue.Q),
-			new Card(CardSuit.H, CardValue.T),new Card(CardSuit.H, CardValue.K)
+	public static List<Card> hand2 = List.of(
+			new Card(CardSuit.S, CardValue.A),
+			new Card(CardSuit.D, CardValue.Q), new Card(CardSuit.H, CardValue.SEVEN),
+			new Card(CardSuit.H, CardValue.THREE),new Card(CardSuit.C, CardValue.K)
 			);
 	
 	public CardSuit getSuit() {
