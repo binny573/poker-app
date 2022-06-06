@@ -114,10 +114,12 @@ public class EvaluateHands {
 			output = pokerhands.threeOfAKind(maxValueCountcv1, maxValueCountcv2, maxOccurredWeightcv1, maxOccurredWeightcv2);
 		}
 		if(output == null) {
+			//Use size() of handPair Values that should be two, then compare weights and finally get the value of the card which occurs once and then compare
+			//those weights
 			output = pokerhands.twoPairs();
 		}
 		if(output == null) {
-			output = pokerhands.pair();
+			output = pokerhands.pair(hand1PairValues, hand2PairValues, listOfPossibleCardValues);
 		}
 		if(output == null) {
 			output = PokerHands.highCard(hand1weights, hand2weights);

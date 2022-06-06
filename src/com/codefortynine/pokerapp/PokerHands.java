@@ -217,8 +217,43 @@ public class PokerHands {
 		return null;
 	}
 	
-	public String pair() {
+	public String pair(Set<Object> hand1PairValues, Set<Object> hand2PairValues, 
+			List<CardValue> listOfPossibleCardValues) {
+		if(!hand1PairValues.isEmpty() && hand2PairValues.isEmpty()) {
+			System.out.println(pairWin);
+			return h1Win;
+		}
+		else if(!hand2PairValues.isEmpty() && hand1PairValues.isEmpty()) {
+			System.out.println(pairWin);
+			return h2Win;
+		}
+		else if (!hand1PairValues.isEmpty() && !hand2PairValues.isEmpty()) {
+			Object setToEnum1 = null;
+			Object setToEnum2 = null;
+			for (Iterator<Object> it = hand1PairValues.iterator(); it.hasNext(); ) 
+				setToEnum1 = it.next();
+			
+			for (Iterator<Object> it = hand2PairValues.iterator(); it.hasNext(); ) 
+				setToEnum2 = it.next();
+			
+			int hand1PairWeight = listOfPossibleCardValues.indexOf(setToEnum1);
+			int hand2PairWeight = listOfPossibleCardValues.indexOf(setToEnum2);
+			if(hand1PairWeight>hand2PairWeight) {
+				System.out.println(pairWin);
+				return h1Win;				
+			}
+			else if(hand2PairWeight>hand1PairWeight) {
+				System.out.println(pairWin);
+				return h2Win;
+			}
+			else if(hand1PairWeight==hand2PairWeight) {
+				System.out.println("Write logic about remaining 3 cards");
+			}
+	
 
+			
+		}
+					
 		return null;
 	}
 	
