@@ -44,51 +44,55 @@ public class EvaluateHands {
 		createListOfPossibleValues(); 
 		createListOfSuits();
 		createListOfValues();
-		System.out.println(listOfPossibleCardValues);
-		System.out.println(listOfPossibleCardValues.indexOf(CardValue.FIVE));
+//		System.out.println(listOfPossibleCardValues);
+//		System.out.println(listOfPossibleCardValues.indexOf(CardValue.FIVE));
 		Map<Object, CountWeight> keyCountWeightMapcv1 = getKeyCountWeighteMap(cv1);
 		Map<Object, CountWeight> keyCountWeightMapcv2 = getKeyCountWeighteMap(cv2);
-		System.out.println("Count " + keyCountWeightMapcv2.get(CardValue.TWO).getCount());
-		System.out.println("Weight " + keyCountWeightMapcv2.get(CardValue.TWO).getWeight());
-
-//		createListOfHandWeights();
-//		setFlushFlag();
-//		Long maxValueCountcv1 = countMaxValueCount(cv1);
-//		Long maxValueCountcv2 = countMaxValueCount(cv2);
-////		System.out.println(hand1weights);
-////		System.out.println(hand2weights);	
-////		String highCardOutput = highCard();
-//		PokerHands pokerhands = new PokerHands();
-//		String output = pokerhands.straightFlush(cs1FlushFlag, cs2FlushFlag, hand1weights, hand2weights);
-//		if(output == null) {
-//			System.out.println("here");
-//			output = pokerhands.fourOfAKind(maxValueCountcv1, maxValueCountcv2);
-//		}
-//		if(output == null) {
-//			System.out.println("ajkshbdj");
-//			output = pokerhands.fullHouse(maxValueCountcv1, maxValueCountcv2);
-//		}
-//		if(output == null) {
-//			output = pokerhands.flush(cs1FlushFlag, cs2FlushFlag, hand1weights, hand2weights);
-//		}
-//		if(output == null) {
-//			output = pokerhands.straight();
-//		}
-//		if(output == null) {
-//			output = pokerhands.threeOfAKind();
-//		}
-//		if(output == null) {
-//			output = pokerhands.twoPairs();
-//		}
-//		if(output == null) {
-//			output = pokerhands.pair();
-//		}
-//		if(output == null) {
-//			output = pokerhands.highCard(hand1weights, hand2weights);
-//		}
-//		if(output == null) {
-//			output = "Some error in the cards";
-//		}
+//		System.out.println("Count " + keyCountWeightMapcv2.get(CardValue.FOUR).getCount());
+//		System.out.println("Weight " + keyCountWeightMapcv2.get(CardValue.FOUR).getWeight());
+		
+		
+		createListOfHandWeights();
+		setFlushFlag();
+		Long maxValueCountcv1 = countMaxValueCount(cv1);
+		Long maxValueCountcv2 = countMaxValueCount(cv2);
+//		System.out.println(hand1weights);
+//		System.out.println(hand2weights);	
+//		String highCardOutput = highCard();
+		PokerHands pokerhands = new PokerHands();
+		List<List<Integer>> listsOfConsecutiveWeightsh1 =  getListsOfConsecutiveWeights(hand1weights);
+		List<List<Integer>> listsOfConsecutiveWeightsh2 =  getListsOfConsecutiveWeights(hand2weights);
+		String output = pokerhands.straightFlush(cs1FlushFlag, cs2FlushFlag, hand1weights, hand2weights,
+				listsOfConsecutiveWeightsh1, listsOfConsecutiveWeightsh2);
+		if(output == null) {
+			System.out.println("here");
+			output = pokerhands.fourOfAKind(maxValueCountcv1, maxValueCountcv2);
+		}
+		if(output == null) {
+			System.out.println("ajkshbdj");
+			output = pokerhands.fullHouse(maxValueCountcv1, maxValueCountcv2);
+		}
+		if(output == null) {
+			output = pokerhands.flush(cs1FlushFlag, cs2FlushFlag, hand1weights, hand2weights);
+		}
+		if(output == null) {
+			output = pokerhands.straight();
+		}
+		if(output == null) {
+			output = pokerhands.threeOfAKind();
+		}
+		if(output == null) {
+			output = pokerhands.twoPairs();
+		}
+		if(output == null) {
+			output = pokerhands.pair();
+		}
+		if(output == null) {
+			output = pokerhands.highCard(hand1weights, hand2weights);
+		}
+		if(output == null) {
+			output = "Some error in the cards";
+		}
 //		
 //		
 //		//String result = straightFlush();
@@ -118,10 +122,28 @@ public class EvaluateHands {
 //		
 //		System.out.println("Card value1 "+ countOfcv1);
 //		System.out.println("Card value2 "+ countOfcv2);
-		return null;
-//		return output;
+		return output;
 	}
-	
+/*
+ * Gives List of Lists of consecutive CardValues, expressed as weights
+ */
+	public static List<List<Integer>> getListsOfConsecutiveWeights(List<Integer> weights) {
+		List<List<Integer>> listsOfWeights = new ArrayList<>();
+		int lowerIndex = 0;
+		int upperIndex = 1;
+		for (int i = 0; i<5;i++) {
+			if(i!=4 && (weights.get(i+1) - weights.get(i) == 1)) 
+				upperIndex++;
+			else {
+				listsOfWeights.add(weights.subList(lowerIndex, upperIndex));
+				lowerIndex = i+1;
+				upperIndex = i +2;
+			}
+		}
+//		System.out.println(listsOfWeights);
+		return listsOfWeights;
+	}
+
 	private Map<Object, CountWeight> getKeyCountWeighteMap(List<CardValue> cv) {
 		Map<Object, Long> countOfCv =
 				cv.stream().collect(Collectors.groupingBy(e -> e, Collectors.counting()));
@@ -132,10 +154,10 @@ public class EvaluateHands {
 			for(Entry<Object, Long> entry: countOfCv.entrySet()) {
 				CountWeight countWeight = new CountWeight();
 				if(entry.getValue() == i) {
-			        System.out.println("The key for value " + i + " is " + entry.getKey());
+			        //System.out.println("The key for value " + i + " is " + entry.getKey());
 			        Long count = entry.getValue();
 			        int weight = listOfPossibleCardValues.indexOf(entry.getKey());
-			        System.out.println(weight);
+			        //System.out.println(weight);
 			        countWeight.setCount(count);
 			        countWeight.setWeight(weight);
 			        keyCountValueMap.put(entry.getKey(), countWeight);
@@ -158,7 +180,7 @@ public class EvaluateHands {
 		{
 			for(Entry<Object, Long> entry: countOfCv.entrySet()) {
 			      if(entry.getValue() == maxValueCount) {
-			        System.out.println("The key for value " + maxValueCount + " is " + entry.getKey());
+			        //System.out.println("The key for value " + maxValueCount + " is " + entry.getKey());
 			      }
 			}
 			

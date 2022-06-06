@@ -3,8 +3,10 @@ package com.codefortynine.pokerapp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Card {
 	
@@ -19,18 +21,17 @@ public class Card {
 	}
 	
 	public static final List<Card> hand1 = List.of(
-			new Card(CardSuit.H, CardValue.K), 
-			new Card(CardSuit.C, CardValue.K), new Card(CardSuit.H, CardValue.K), 
-			new Card(CardSuit.C, CardValue.TWO),new Card(CardSuit.H, CardValue.K)
+			new Card(CardSuit.H, CardValue.FIVE), 
+			new Card(CardSuit.H, CardValue.SIX), new Card(CardSuit.H, CardValue.SEVEN), 
+			new Card(CardSuit.C, CardValue.EIGHT),new Card(CardSuit.H, CardValue.NINE)
 			);
 
 	public static final List<Card> hand2 = List.of(
 			new Card(CardSuit.C, CardValue.TWO), 
-			new Card(CardSuit.H, CardValue.FOUR), new Card(CardSuit.C, CardValue.FOUR), 
-			new Card(CardSuit.C, CardValue.FOUR),new Card(CardSuit.C, CardValue.FOUR)
+			new Card(CardSuit.C, CardValue.TWO), new Card(CardSuit.C, CardValue.FOUR), 
+			new Card(CardSuit.C, CardValue.FIVE),new Card(CardSuit.C, CardValue.SIX)
 			);
 	
-
 	public CardSuit getSuit() {
 		return suit;
 	}
@@ -71,7 +72,10 @@ public class Card {
 		EvaluateHands evaluateHands = new EvaluateHands(hand1, hand2, numberOfHandCards);
 		String result = evaluateHands.determineWinner();
 		System.out.println(result);
-
+//		ArrayList<Integer> weights = new ArrayList<>(Arrays.asList(1,3,4,6,8));
+//		List<List<Integer>> listsOfWeigh = getListsOfWeights(weights);
+//		System.out.println(listsOfWeigh);
+//		System.out.println(listsOfWeigh.size());
 	}
-
 }
+
