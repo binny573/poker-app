@@ -66,7 +66,7 @@ public class EvaluateHands {
 				listsOfConsecutiveWeightsh1, listsOfConsecutiveWeightsh2);
 		if(output == null) {
 			System.out.println("here");
-			output = pokerhands.fourOfAKind(maxValueCountcv1, maxValueCountcv2);
+			output = pokerhands.fourOfAKind(hand1weights, hand2weights, maxValueCountcv1, maxValueCountcv2);
 		}
 		if(output == null) {
 			System.out.println("ajkshbdj");
@@ -175,15 +175,13 @@ public class EvaluateHands {
 				cv.stream().collect(Collectors.groupingBy(e -> e, Collectors.counting()));
 
 		Long maxValueCount = Collections.max(countOfCv.values());
-		// 5 is not possible because only eg. 4 Aces exist in a deck
 		if (maxValueCount == 4)
 		{
 			for(Entry<Object, Long> entry: countOfCv.entrySet()) {
 			      if(entry.getValue() == maxValueCount) {
 			        //System.out.println("The key for value " + maxValueCount + " is " + entry.getKey());
 			      }
-			}
-			
+			}	
 		}
 		else if (maxValueCount == 3)
 		{
@@ -208,10 +206,12 @@ public class EvaluateHands {
 		for (CardValue cardValue : cv1) {
 //			System.out.println(listOfPossibleCardValues.indexOf(cardSuit));
 			hand1weights.add(listOfPossibleCardValues.indexOf(cardValue));
+			Collections.sort(hand1weights);
 		}
 		for (CardValue cardValue : cv2) {
 //			System.out.println(listOfPossibleCardValues.indexOf(cardSuit));
 			hand2weights.add(listOfPossibleCardValues.indexOf(cardValue));
+			Collections.sort(hand2weights);
 		}
 	}
 

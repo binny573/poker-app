@@ -68,7 +68,8 @@ public class PokerHands {
 //		System.out.println("Check for a lower category");
 //		return false;
 	}
-	public String fourOfAKind(Long maxValueCountcv1, Long maxValueCountcv2) {
+	public String fourOfAKind(List<Integer> hand1weights, List<Integer> hand2weights,
+			Long maxValueCountcv1, Long maxValueCountcv2) {
 		System.out.println(maxValueCountcv1);
 		System.out.println( maxValueCountcv2);
 		if (maxValueCountcv1 == 4 && maxValueCountcv2 != 4) {
@@ -103,14 +104,22 @@ public class PokerHands {
 		}
 		return null;
 	}
+	
 	public String flush(Boolean cs1FlushFlag, Boolean cs2FlushFlag,
 			List<Integer> hand1weights, List<Integer> hand2weights)
 	{
-		if (cs1FlushFlag && cs2FlushFlag == false) 				return h1Win;
+		if (cs1FlushFlag && cs2FlushFlag == false) 	{
+			System.out.println(flushWin);
+			return h1Win;
+		}
 		
-		else if (cs1FlushFlag == false && cs2FlushFlag) 		return h2Win;
+		else if (cs1FlushFlag == false && cs2FlushFlag) {
+			System.out.println(flushWin);
+			return h2Win;
+		}
 		
 		else if(cs1FlushFlag && cs2FlushFlag) {
+			System.out.println(flushWin);
 			return highCard(hand1weights, hand2weights);
 			//System.out.println("Card with highest value wins ie highest index in that map and then return a string");
 		}
@@ -133,13 +142,20 @@ public class PokerHands {
 
 		return null;
 	}
-	public String highCard(List<Integer> hand1weights,List<Integer> hand2weights) {
-		System.out.println("High card was used");
-		if (Collections.max(hand1weights)>Collections.max(hand2weights)) return h1Win;
-		else if (Collections.max(hand2weights)>Collections.max(hand1weights)) return h2Win;
-		else {
-			return "wait";
+	public static String highCard(List<Integer> weights1, List<Integer> weights2) {
+		for (int i = 4; i>=0; i--) {
+			if(weights1.get(i)>weights2.get(i)) {
+				System.out.println("highCardwin");
+				return "h1Wins";
+			}
+			else if(weights2.get(i)>weights1.get(i)) {
+				System.out.println("highCardwin");
+				return "h2Wins";
+			}	
 		}
+		return "The game is a tie";
 	}
+
+	
 
 }

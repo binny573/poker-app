@@ -72,7 +72,10 @@ public class Card {
 		EvaluateHands evaluateHands = new EvaluateHands(hand1, hand2, numberOfHandCards);
 		String result = evaluateHands.determineWinner();
 		System.out.println(result);
-//		ArrayList<Integer> weights = new ArrayList<>(Arrays.asList(1,3,4,6,8));
+		
+		ArrayList<Integer> weights1 = new ArrayList<>(Arrays.asList(10,11,1,9,8));
+		ArrayList<Integer> weights2 = new ArrayList<>(Arrays.asList(2,10,1,4,0));
+		//String result = highCard(weights1, weights2);
 //		List<List<Integer>> listsOfWeigh = getListsOfWeights(weights);
 //		System.out.println(listsOfWeigh);
 //		System.out.println(listsOfWeigh.size());
