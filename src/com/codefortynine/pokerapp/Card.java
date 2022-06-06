@@ -21,15 +21,15 @@ public class Card {
 	}
 	
 	public static final List<Card> hand1 = List.of(
-			new Card(CardSuit.S, CardValue.T),
-			new Card(CardSuit.H, CardValue.J), new Card(CardSuit.S, CardValue.Q), 
-			new Card(CardSuit.H, CardValue.A),new Card(CardSuit.C, CardValue.K)
+			new Card(CardSuit.S, CardValue.FOUR),
+			new Card(CardSuit.H, CardValue.TWO), new Card(CardSuit.S, CardValue.SEVEN), 
+			new Card(CardSuit.S, CardValue.TWO),new Card(CardSuit.S, CardValue.NINE)
 			);
 
 	public static final List<Card> hand2 = List.of(
-			new Card(CardSuit.H, CardValue.T), 
-			new Card(CardSuit.H, CardValue.NINE), new Card(CardSuit.C, CardValue.K), 
-			new Card(CardSuit.H, CardValue.Q),new Card(CardSuit.H, CardValue.J)
+			new Card(CardSuit.H, CardValue.FIVE),
+			new Card(CardSuit.D, CardValue.T), new Card(CardSuit.H, CardValue.Q),
+			new Card(CardSuit.H, CardValue.T),new Card(CardSuit.H, CardValue.K)
 			);
 	
 	public CardSuit getSuit() {
@@ -45,7 +45,6 @@ public class Card {
 		this.value = value;
 	}
 
-	
 	public static void main(String [] args) {
 		//System.out.println(hand1);
 		/* Traversing the loops*/
