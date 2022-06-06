@@ -69,7 +69,8 @@ public class PokerHands {
 //		return false;
 	}
 	public String fourOfAKind(List<Integer> hand1weights, List<Integer> hand2weights,
-			Long maxValueCountcv1, Long maxValueCountcv2) {
+			Long maxValueCountcv1, Long maxValueCountcv2, Integer maxOccurredWeightcv1, 
+			Integer maxOccurredWeightcv2) {
 		System.out.println(maxValueCountcv1);
 		System.out.println( maxValueCountcv2);
 		if (maxValueCountcv1 == 4 && maxValueCountcv2 != 4) {
@@ -81,7 +82,9 @@ public class PokerHands {
 			return h2Win;
 		}
 		else if (maxValueCountcv1 == 4 && maxValueCountcv2 == 4) {
-			System.out.println("Write logic to compare weights of those Card Values");
+			System.out.println(fourOfAKindWin);
+			if(maxOccurredWeightcv1>maxOccurredWeightcv2) return h1Win;
+			else if(maxOccurredWeightcv2>maxOccurredWeightcv1) return h2Win;
 		}
 		
 		return null;

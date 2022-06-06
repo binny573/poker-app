@@ -22,14 +22,14 @@ public class Card {
 	
 	public static final List<Card> hand1 = List.of(
 			new Card(CardSuit.H, CardValue.FIVE), 
-			new Card(CardSuit.H, CardValue.SIX), new Card(CardSuit.H, CardValue.SEVEN), 
-			new Card(CardSuit.C, CardValue.EIGHT),new Card(CardSuit.H, CardValue.NINE)
+			new Card(CardSuit.H, CardValue.FIVE), new Card(CardSuit.H, CardValue.FIVE), 
+			new Card(CardSuit.C, CardValue.FIVE),new Card(CardSuit.H, CardValue.NINE)
 			);
 
 	public static final List<Card> hand2 = List.of(
-			new Card(CardSuit.C, CardValue.TWO), 
-			new Card(CardSuit.C, CardValue.TWO), new Card(CardSuit.C, CardValue.FOUR), 
-			new Card(CardSuit.C, CardValue.FIVE),new Card(CardSuit.C, CardValue.SIX)
+			new Card(CardSuit.C, CardValue.NINE), 
+			new Card(CardSuit.C, CardValue.NINE), new Card(CardSuit.C, CardValue.NINE), 
+			new Card(CardSuit.C, CardValue.NINE),new Card(CardSuit.C, CardValue.TWO)
 			);
 	
 	public CardSuit getSuit() {
@@ -73,8 +73,8 @@ public class Card {
 		String result = evaluateHands.determineWinner();
 		System.out.println(result);
 		
-		ArrayList<Integer> weights1 = new ArrayList<>(Arrays.asList(10,11,1,9,8));
-		ArrayList<Integer> weights2 = new ArrayList<>(Arrays.asList(2,10,1,4,0));
+
+		//ArrayList<Integer> weights2 = new ArrayList<>(Arrays.asList(2,10,1,4,0));
 		//String result = highCard(weights1, weights2);
 //		List<List<Integer>> listsOfWeigh = getListsOfWeights(weights);
 //		System.out.println(listsOfWeigh);

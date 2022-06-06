@@ -66,7 +66,10 @@ public class EvaluateHands {
 				listsOfConsecutiveWeightsh1, listsOfConsecutiveWeightsh2);
 		if(output == null) {
 			System.out.println("here");
-			output = pokerhands.fourOfAKind(hand1weights, hand2weights, maxValueCountcv1, maxValueCountcv2);
+			Integer maxOccurredWeightcv1 = getMaxOccurredWeight(hand1weights);
+			Integer maxOccurredWeightcv2 = getMaxOccurredWeight(hand2weights);
+			output = pokerhands.fourOfAKind(hand1weights, hand2weights, 
+					maxValueCountcv1, maxValueCountcv2, maxOccurredWeightcv1, maxOccurredWeightcv2);
 		}
 		if(output == null) {
 			System.out.println("ajkshbdj");
@@ -127,6 +130,28 @@ public class EvaluateHands {
 /*
  * Gives List of Lists of consecutive CardValues, expressed as weights
  */
+	public static int getMaxOccurredWeight(List<Integer> arr){
+	    int tempcount = 0;
+	    int temp = 0;
+		int maxOccured = arr.get(0);
+	    int count = 1;
+
+
+	    for(int i = 0; i < arr.size(); i++) {
+	        temp = arr.get(i);
+	        tempcount = 0;
+	        for(int j = 1; j < arr.size(); j++) {
+	            if(temp == arr.get(j))
+	                tempcount++;
+	        }
+	        if (tempcount > count) {
+	        	maxOccured = temp;
+	            count = tempcount;
+	        }
+	    }
+	    return maxOccured;
+	}
+	
 	public static List<List<Integer>> getListsOfConsecutiveWeights(List<Integer> weights) {
 		List<List<Integer>> listsOfWeights = new ArrayList<>();
 		int lowerIndex = 0;
