@@ -27,7 +27,6 @@ public class PokerHands {
 			) 
 	{
 		if(listsOfConsecutiveWeightsh1.size()==1 && listsOfConsecutiveWeightsh2.size()==1) {
-		
 		if (cs1FlushFlag && cs2FlushFlag == false) 		{
 			System.out.println(straightFlushWin);
 			return h1Win;
@@ -58,7 +57,7 @@ public class PokerHands {
 		else if (listsOfConsecutiveWeightsh2.size()==1 && listsOfConsecutiveWeightsh1.size()!=1 && cs2FlushFlag) {
 			System.out.println(straightFlushWin);
 			return h2Win;
-		}	
+		}
 		return null;
 			
 //		if()
@@ -129,8 +128,27 @@ public class PokerHands {
 		else return null;
 
 	}
-	public String straight() {
-
+	public String straight( List<Integer> hand1weights, List<Integer> hand2weights,
+			List<List<Integer>> listsOfConsecutiveWeightsh1, List<List<Integer>> listsOfConsecutiveWeightsh2
+) {
+		if(listsOfConsecutiveWeightsh1.size()==1 && listsOfConsecutiveWeightsh2.size()==1) {
+			if(Collections.max(hand1weights)>Collections.max(hand2weights)) {
+				System.out.println(straightWin);
+				return h1Win;
+			}
+			else {
+				System.out.println(straightWin);
+				return h2Win;
+			}
+		}
+		else if (listsOfConsecutiveWeightsh1.size()==1 && listsOfConsecutiveWeightsh2.size()!=1 ){
+			System.out.println(straightWin);
+			return h1Win;
+		}
+		else if (listsOfConsecutiveWeightsh2.size()==1 && listsOfConsecutiveWeightsh1.size()!=1) {
+			System.out.println(straightWin);
+			return h2Win;
+		}	
 		return null;
 	}
 	public String threeOfAKind() {
@@ -148,11 +166,11 @@ public class PokerHands {
 	public static String highCard(List<Integer> weights1, List<Integer> weights2) {
 		for (int i = 4; i>=0; i--) {
 			if(weights1.get(i)>weights2.get(i)) {
-				System.out.println("highCardwin");
+				System.out.println(highCardWin);
 				return "h1Wins";
 			}
 			else if(weights2.get(i)>weights1.get(i)) {
-				System.out.println("highCardwin");
+				System.out.println(highCardWin);
 				return "h2Wins";
 			}	
 		}

@@ -79,7 +79,7 @@ public class EvaluateHands {
 			output = pokerhands.flush(cs1FlushFlag, cs2FlushFlag, hand1weights, hand2weights);
 		}
 		if(output == null) {
-			output = pokerhands.straight();
+			output = pokerhands.straight(hand1weights, hand2weights, listsOfConsecutiveWeightsh1, listsOfConsecutiveWeightsh2);
 		}
 		if(output == null) {
 			output = pokerhands.threeOfAKind();

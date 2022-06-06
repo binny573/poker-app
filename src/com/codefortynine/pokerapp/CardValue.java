@@ -13,6 +13,5 @@ public enum CardValue {
 	J,
 	Q,
 	K,
-	A
-	
+	A	
 }
