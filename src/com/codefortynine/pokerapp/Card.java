@@ -27,9 +27,9 @@ public class Card {
 			);
 
 	public static List<Card> hand2 = List.of(
-			new Card(CardSuit.S, CardValue.A),
-			new Card(CardSuit.D, CardValue.A), new Card(CardSuit.H, CardValue.SEVEN),
-			new Card(CardSuit.H, CardValue.THREE),new Card(CardSuit.C, CardValue.K)
+			new Card(CardSuit.S, CardValue.TWO),
+			new Card(CardSuit.D, CardValue.Q), new Card(CardSuit.H, CardValue.T),
+			new Card(CardSuit.H, CardValue.A),new Card(CardSuit.C, CardValue.K)
 			);
 	
 	public CardSuit getSuit() {

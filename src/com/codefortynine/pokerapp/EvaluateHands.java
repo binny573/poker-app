@@ -24,8 +24,8 @@ public class EvaluateHands {
 	private List<CardValue> cv2 = new ArrayList<CardValue>();
 	
 	/* Assigns weight to get winner based on high card*/
-	private List<Integer> hand1weights = new ArrayList<>();
-	private List<Integer> hand2weights = new ArrayList<>();
+	private List<Integer> hand1Weights = new ArrayList<>();
+	private List<Integer> hand2Weights = new ArrayList<>();
 	
 	private Boolean cs1FlushFlag = false;
 	private Boolean cs2FlushFlag = false;
@@ -38,7 +38,7 @@ public class EvaluateHands {
 		this.hand2 = hand2;
 		this.numberOfHandCards = numberOfHandCards;
 		
-		System.out.println("Welcome to the Poker App!!...\nLet us check which hand won");
+		System.out.println("...Welcome to the Poker App!!...\n   Let us check which hand won\n.................................");
 		createListOfPossibleValues();
 		createListOfSuits();
 		createListOfValues();
@@ -54,7 +54,7 @@ public class EvaluateHands {
 	This method prints whether hand1 won on hand2
 	Methods return 
 	 */
-	public static Set<Object> getValueFornOccurrences(Map<Object, Long> map, Long value) {
+	public static Set<Object> getValuesFornOccurrences(Map<Object, Long> map, Long value) {
 	    Set<Object> keys = new HashSet<Object>();
 	    for (Entry<Object, Long> entry : map.entrySet()) {
 	        if (Objects.equals(value, entry.getValue())) {
@@ -73,12 +73,18 @@ public class EvaluateHands {
 		Map<Object, Long> cardValueCount1 = getCardValueCount(cv1);
 		Map<Object, Long> cardValueCount2 = getCardValueCount(cv2);
 		
-		Set<Object> hand1PairValues = (Set<Object>) getValueFornOccurrences(cardValueCount1, Long.valueOf(2));
-		Set<Object> hand2PairValues = (Set<Object>) getValueFornOccurrences(cardValueCount2, Long.valueOf(2));
+		Set<Object> hand1PairValues = (Set<Object>) getValuesFornOccurrences(cardValueCount1, Long.valueOf(2));
+		Set<Object> hand2PairValues = (Set<Object>) getValuesFornOccurrences(cardValueCount2, Long.valueOf(2));
 		
-		Set<Object> hand1TripletValue = (Set<Object>) getValueFornOccurrences(cardValueCount1, Long.valueOf(3));
-		Set<Object> hand2TripletValue = (Set<Object>) getValueFornOccurrences(cardValueCount2, Long.valueOf(3));
-				
+		Set<Object> hand1TripletValue = (Set<Object>) getValuesFornOccurrences(cardValueCount1, Long.valueOf(3));
+		Set<Object> hand2TripletValue = (Set<Object>) getValuesFornOccurrences(cardValueCount2, Long.valueOf(3));
+		
+		Set<Object> hand1SolitaryValues = (Set<Object>) getValuesFornOccurrences(cardValueCount1, Long.valueOf(1));
+		Set<Object> hand2SolitaryValues = (Set<Object>) getValuesFornOccurrences(cardValueCount2, Long.valueOf(1));
+		
+//		System.out.println(hand1solitaryValue);
+//		System.out.println(hand2solitaryValue);
+		
 //		System.out.println(hand1PairValues);
 //		System.out.println(hand1pairValues.isEmpty());
 //		System.out.println(hand2PairValues);
@@ -86,18 +92,19 @@ public class EvaluateHands {
 //		
 		Long maxValueCountcv1 = getMaxValueCount(cardValueCount1);
 		Long maxValueCountcv2 = getMaxValueCount(cardValueCount2);
+		
 //		System.out.println(hand1weights);
 //		System.out.println(hand2weights);
 //		String highCardOutput = highCard();
 		PokerHands pokerhands = new PokerHands();
-		List<List<Integer>> listsOfConsecutiveWeightsh1 =  getListsOfConsecutiveWeights(hand1weights);
-		List<List<Integer>> listsOfConsecutiveWeightsh2 =  getListsOfConsecutiveWeights(hand2weights);
-		Integer maxOccurredWeightcv1 = getMaxOccurredWeight(hand1weights);
-		Integer maxOccurredWeightcv2 = getMaxOccurredWeight(hand2weights);
-		String output = pokerhands.straightFlush(cs1FlushFlag, cs2FlushFlag, hand1weights, hand2weights,
+		List<List<Integer>> listsOfConsecutiveWeightsh1 =  getListsOfConsecutiveWeights(hand1Weights);
+		List<List<Integer>> listsOfConsecutiveWeightsh2 =  getListsOfConsecutiveWeights(hand2Weights);
+		Integer maxOccurredWeightcv1 = getMaxOccurredWeight(hand1Weights);
+		Integer maxOccurredWeightcv2 = getMaxOccurredWeight(hand2Weights);
+		String output = pokerhands.straightFlush(cs1FlushFlag, cs2FlushFlag, hand1Weights, hand2Weights,
 				listsOfConsecutiveWeightsh1, listsOfConsecutiveWeightsh2);
 		if(output == null) {
-			output = pokerhands.fourOfAKind(hand1weights, hand2weights,
+			output = pokerhands.fourOfAKind(hand1Weights, hand2Weights,
 					maxValueCountcv1, maxValueCountcv2, maxOccurredWeightcv1, maxOccurredWeightcv2);
 		}
 		if(output == null) {
@@ -105,10 +112,10 @@ public class EvaluateHands {
 					hand1TripletValue, hand2TripletValue, listOfPossibleCardValues);
 		}
 		if(output == null) {
-			output = pokerhands.flush(cs1FlushFlag, cs2FlushFlag, hand1weights, hand2weights);
+			output = pokerhands.flush(cs1FlushFlag, cs2FlushFlag, hand1Weights, hand2Weights);
 		}
 		if(output == null) {
-			output = pokerhands.straight(hand1weights, hand2weights, listsOfConsecutiveWeightsh1, listsOfConsecutiveWeightsh2);
+			output = pokerhands.straight(hand1Weights, hand2Weights, listsOfConsecutiveWeightsh1, listsOfConsecutiveWeightsh2);
 		}
 		if(output == null) {
 			output = pokerhands.threeOfAKind(maxValueCountcv1, maxValueCountcv2, maxOccurredWeightcv1, maxOccurredWeightcv2);
@@ -119,10 +126,10 @@ public class EvaluateHands {
 			output = pokerhands.twoPairs();
 		}
 		if(output == null) {
-			output = pokerhands.pair(hand1PairValues, hand2PairValues, listOfPossibleCardValues);
+			output = pokerhands.pair(hand1PairValues, hand2PairValues, hand1SolitaryValues, hand2SolitaryValues, listOfPossibleCardValues);
 		}
 		if(output == null) {
-			output = PokerHands.highCard(hand1weights, hand2weights);
+			output = PokerHands.highCard(hand1Weights, hand2Weights);
 		}
 		if(output == null) {
 			output = "Some error in the cards";
@@ -260,13 +267,13 @@ public class EvaluateHands {
 	private void createListOfHandWeights() {
 		for (CardValue cardValue : cv1) {
 //			System.out.println(listOfPossibleCardValues.indexOf(cardSuit));
-			hand1weights.add(listOfPossibleCardValues.indexOf(cardValue));
-			Collections.sort(hand1weights);
+			hand1Weights.add(listOfPossibleCardValues.indexOf(cardValue));
+			Collections.sort(hand1Weights);
 		}
 		for (CardValue cardValue : cv2) {
 //			System.out.println(listOfPossibleCardValues.indexOf(cardSuit));
-			hand2weights.add(listOfPossibleCardValues.indexOf(cardValue));
-			Collections.sort(hand2weights);
+			hand2Weights.add(listOfPossibleCardValues.indexOf(cardValue));
+			Collections.sort(hand2Weights);
 		}
 	}
 

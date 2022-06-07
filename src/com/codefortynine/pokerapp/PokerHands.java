@@ -217,7 +217,8 @@ public class PokerHands {
 		return null;
 	}
 	
-	public String pair(Set<Object> hand1PairValues, Set<Object> hand2PairValues, 
+	public String pair(Set<Object> hand1PairValues, Set<Object> hand2PairValues,
+			Set<Object> hand1SolitaryValues,Set<Object> hand2SolitaryValues,
 			List<CardValue> listOfPossibleCardValues) {
 		if(!hand1PairValues.isEmpty() && hand2PairValues.isEmpty()) {
 			System.out.println(pairWin);
@@ -247,11 +248,36 @@ public class PokerHands {
 				return h2Win;
 			}
 			else if(hand1PairWeight==hand2PairWeight) {
-				System.out.println("Write logic about remaining 3 cards");
+				List<Integer> hand1RemainingWeights = new ArrayList<Integer>();
+				List<Integer> hand2RemainingWeights = new ArrayList<Integer>();
+				Object o1 = null;
+				for (Iterator<Object> it = hand1SolitaryValues.iterator(); it.hasNext(); ) {
+					o1 = it.next();
+					Integer temp1 = listOfPossibleCardValues.indexOf(o1);
+					hand1RemainingWeights.add(temp1);
+				}
+					
+				
+				for (Iterator<Object> it = hand2SolitaryValues.iterator(); it.hasNext(); ) {
+					o1 = it.next();
+					Integer temp2 = listOfPossibleCardValues.indexOf(o1);
+					hand2RemainingWeights.add(temp2);	
+				}
+				System.out.println(hand1RemainingWeights);
+				System.out.println(hand2RemainingWeights);
+				
+				//Get weights of remaining 3 cards then literally same as high Card
+				for (int i = 2; i>=0; i--) {
+					if(hand1RemainingWeights.get(i)>hand2RemainingWeights.get(i)) {
+						System.out.println(pairWin);
+						return h1Win;
+					}
+					else if(hand2RemainingWeights.get(i)>hand1RemainingWeights.get(i)) {
+						System.out.println(pairWin);
+						return h2Win;
+					}
+				}	
 			}
-	
-
-			
 		}
 					
 		return null;
@@ -261,11 +287,11 @@ public class PokerHands {
 		for (int i = 4; i>=0; i--) {
 			if(weights1.get(i)>weights2.get(i)) {
 				System.out.println(highCardWin);
-				return "h1Wins";
+				return h1Win;
 			}
 			else if(weights2.get(i)>weights1.get(i)) {
 				System.out.println(highCardWin);
-				return "h2Wins";
+				return h2Win;
 			}
 		}
 		return "The game is a tie";
