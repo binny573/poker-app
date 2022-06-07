@@ -32,6 +32,10 @@ public class EvaluateHands {
 	
 	private int numberOfHandCards;
 	
+	private static final String tie = "It is a tie!!" ;
+	private static final String invalidCards = "Please check if the cards you entered can coexist in a single deck...This gives no result!!" ;
+
+	
 	public EvaluateHands(List<Card> hand1, List<Card> hand2, int numberOfHandCards) {
 		super();
 		this.hand1 = hand1;
@@ -64,12 +68,7 @@ public class EvaluateHands {
 	    return keys;
 	}
 	public String determineWinner() {
-//		System.out.println(listOfPossibleCardValues);
-//		System.out.println(listOfPossibleCardValues.indexOf(CardValue.FIVE));
-//		Map<Object, CountWeight> keyCountWeightMapcv1 = getKeyCountWeighteMap(cv1);
-//		Map<Object, CountWeight> keyCountWeightMapcv2 = getKeyCountWeighteMap(cv2);
-//		System.out.println("Count " + keyCountWeightMapcv2.get(CardValue.FOUR).getCount());
-//		System.out.println("Weight " + keyCountWeightMapcv2.get(CardValue.FOUR).getWeight());
+
 		Map<Object, Long> cardValueCount1 = getCardValueCount(cv1);
 		Map<Object, Long> cardValueCount2 = getCardValueCount(cv2);
 		
@@ -81,58 +80,48 @@ public class EvaluateHands {
 		
 		Set<Object> hand1SolitaryValues = (Set<Object>) getValuesFornOccurrences(cardValueCount1, Long.valueOf(1));
 		Set<Object> hand2SolitaryValues = (Set<Object>) getValuesFornOccurrences(cardValueCount2, Long.valueOf(1));
-		
-//		System.out.println(hand1solitaryValue);
-//		System.out.println(hand2solitaryValue);
-		
-//		System.out.println(hand1PairValues);
-//		System.out.println(hand1pairValues.isEmpty());
-//		System.out.println(hand2PairValues);
-//		System.out.println(hand2pairValues.isEmpty());
-//		
+				
 		Long maxValueCountcv1 = getMaxValueCount(cardValueCount1);
 		Long maxValueCountcv2 = getMaxValueCount(cardValueCount2);
 		
-//		System.out.println(hand1weights);
-//		System.out.println(hand2weights);
-//		String highCardOutput = highCard();
 		PokerHands pokerhands = new PokerHands();
 		List<List<Integer>> listsOfConsecutiveWeightsh1 =  getListsOfConsecutiveWeights(hand1Weights);
 		List<List<Integer>> listsOfConsecutiveWeightsh2 =  getListsOfConsecutiveWeights(hand2Weights);
 		Integer maxOccurredWeightcv1 = getMaxOccurredWeight(hand1Weights);
 		Integer maxOccurredWeightcv2 = getMaxOccurredWeight(hand2Weights);
-		String output = pokerhands.straightFlush(cs1FlushFlag, cs2FlushFlag, hand1Weights, hand2Weights,
+				
+		if(cv1.equals(cv2)) return tie;
+		
+		String decision = pokerhands.straightFlush(cs1FlushFlag, cs2FlushFlag, hand1Weights, hand2Weights,
 				listsOfConsecutiveWeightsh1, listsOfConsecutiveWeightsh2);
-		if(output == null) {
-			output = pokerhands.fourOfAKind(hand1Weights, hand2Weights,
+		if(decision == null) {
+			decision = pokerhands.fourOfAKind(hand1Weights, hand2Weights,
 					maxValueCountcv1, maxValueCountcv2, maxOccurredWeightcv1, maxOccurredWeightcv2);
 		}
-		if(output == null) {
-			output = pokerhands.fullHouse(maxValueCountcv1, maxValueCountcv2, hand1PairValues, hand2PairValues,
+		if(decision == null) {
+			decision = pokerhands.fullHouse(maxValueCountcv1, maxValueCountcv2, hand1PairValues, hand2PairValues,
 					hand1TripletValue, hand2TripletValue, listOfPossibleCardValues);
 		}
-		if(output == null) {
-			output = pokerhands.flush(cs1FlushFlag, cs2FlushFlag, hand1Weights, hand2Weights);
+		if(decision == null) {
+			decision = pokerhands.flush(cs1FlushFlag, cs2FlushFlag, hand1Weights, hand2Weights);
 		}
-		if(output == null) {
-			output = pokerhands.straight(hand1Weights, hand2Weights, listsOfConsecutiveWeightsh1, listsOfConsecutiveWeightsh2);
+		if(decision == null) {
+			decision = pokerhands.straight(hand1Weights, hand2Weights, listsOfConsecutiveWeightsh1, listsOfConsecutiveWeightsh2);
 		}
-		if(output == null) {
-			output = pokerhands.threeOfAKind(maxValueCountcv1, maxValueCountcv2, maxOccurredWeightcv1, maxOccurredWeightcv2);
+		if(decision == null) {
+			decision = pokerhands.threeOfAKind(maxValueCountcv1, maxValueCountcv2, maxOccurredWeightcv1, maxOccurredWeightcv2);
 		}
-		if(output == null) {
-			//Use size() of handPair Values that should be two, then compare weights and finally get the value of the card which occurs once and then compare
-			//those weights
-			output = pokerhands.twoPairs();
+		if(decision == null) {
+			decision = pokerhands.twoPairs(hand1PairValues, hand2PairValues,hand1SolitaryValues,hand2SolitaryValues, listOfPossibleCardValues);
 		}
-		if(output == null) {
-			output = pokerhands.pair(hand1PairValues, hand2PairValues, hand1SolitaryValues, hand2SolitaryValues, listOfPossibleCardValues);
+		if(decision == null) {
+			decision = pokerhands.pair(hand1PairValues, hand2PairValues, hand1SolitaryValues, hand2SolitaryValues, listOfPossibleCardValues);
 		}
-		if(output == null) {
-			output = PokerHands.highCard(hand1Weights, hand2Weights);
+		if(decision == null) {
+			decision = PokerHands.highCard(hand1Weights, hand2Weights);
 		}
-		if(output == null) {
-			output = "Some error in the cards";
+		if(decision == null) {
+			decision = invalidCards;
 		}
 
 //		//String result = straightFlush();
@@ -162,7 +151,7 @@ public class EvaluateHands {
 //		
 //		System.out.println("Card value1 "+ countOfcv1);
 //		System.out.println("Card value2 "+ countOfcv2);
-		return output;
+		return decision;
 	}
 /*
  * Gives List of Lists of consecutive CardValues, expressed as weights
@@ -204,7 +193,11 @@ public class EvaluateHands {
 //		System.out.println(listsOfWeights);
 		return listsOfWeights;
 	}
-
+	
+/*
+ * getKeyCountWeighteMap() unused in the main program flow, formulated to simplify tasks in the initial stages.
+ * But better alternatives found so dropped.
+ */
 	private Map<Object, CountWeight> getKeyCountWeighteMap(List<CardValue> cv) {
 		Map<Object, Long> countOfCv =
 				cv.stream().collect(Collectors.groupingBy(e -> e, Collectors.counting()));
@@ -217,7 +210,6 @@ public class EvaluateHands {
 			        //System.out.println("The key for value " + i + " is " + entry.getKey());
 			        Long count = entry.getValue();
 			        int weight = listOfPossibleCardValues.indexOf(entry.getKey());
-			        //System.out.println(weight);
 			        countWeight.setCount(count);
 			        countWeight.setWeight(weight);
 			        keyCountValueMap.put(entry.getKey(), countWeight);
@@ -237,41 +229,15 @@ public class EvaluateHands {
 		
 	private Long getMaxValueCount(Map<Object, Long> cardValueCount) {
 		Long maxValueCount = Collections.max(cardValueCount.values());
-		//System.out.println(maxValueCount);
-		if (maxValueCount == 4)
-		{
-			for(Entry<Object, Long> entry: cardValueCount.entrySet()) {
-			      if(entry.getValue() == maxValueCount) {
-			        //System.out.println("The key for value " + maxValueCount + " is " + entry.getKey());
-			      }
-			}	
-		}
-		else if (maxValueCount == 3)
-		{
-		//Add code to create a Map that will add key to that weight		
-		}
-		else if (maxValueCount == 2)
-		{
-			
-		}
-		else if (maxValueCount == 1) {
-				//Guess also not needed
-			}
-		for (Map.Entry<Object, Long> entry : cardValueCount.entrySet()) {
-//				    System.out.println("Key " + entry.getKey() + " Value " + entry.getValue());
-			}
-		//return the weight which is repeated maximum times
 		return maxValueCount;
 	}
 
 	private void createListOfHandWeights() {
 		for (CardValue cardValue : cv1) {
-//			System.out.println(listOfPossibleCardValues.indexOf(cardSuit));
 			hand1Weights.add(listOfPossibleCardValues.indexOf(cardValue));
 			Collections.sort(hand1Weights);
 		}
 		for (CardValue cardValue : cv2) {
-//			System.out.println(listOfPossibleCardValues.indexOf(cardSuit));
 			hand2Weights.add(listOfPossibleCardValues.indexOf(cardValue));
 			Collections.sort(hand2Weights);
 		}
@@ -283,8 +249,6 @@ public class EvaluateHands {
 		}
 	}
 
-	//public Hashmap
-	//not redundant cz we deal in CardSuits here and not CardValue
 	public void setFlushFlag() {
 		Map<Object, Long> countOfcs1 =
 				cs1.stream().collect(Collectors.groupingBy(e -> e, Collectors.counting()));

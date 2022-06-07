@@ -21,15 +21,15 @@ public class Card {
 	}
 	
 	public static List<Card> hand1 = List.of(
-			new Card(CardSuit.C, CardValue.K),
-			new Card(CardSuit.H, CardValue.K), new Card(CardSuit.H, CardValue.EIGHT), 
-			new Card(CardSuit.D, CardValue.THREE),new Card(CardSuit.S, CardValue.TWO)
+			new Card(CardSuit.H, CardValue.K),
+			new Card(CardSuit.S, CardValue.J), new Card(CardSuit.H, CardValue.A), 
+			new Card(CardSuit.H, CardValue.Q),new Card(CardSuit.H, CardValue.T)
 			);
 
 	public static List<Card> hand2 = List.of(
 			new Card(CardSuit.S, CardValue.TWO),
-			new Card(CardSuit.D, CardValue.Q), new Card(CardSuit.H, CardValue.T),
-			new Card(CardSuit.H, CardValue.A),new Card(CardSuit.C, CardValue.K)
+			new Card(CardSuit.S, CardValue.THREE), new Card(CardSuit.S, CardValue.FIVE),
+			new Card(CardSuit.S, CardValue.FOUR),new Card(CardSuit.S, CardValue.SIX)
 			);
 	
 	public CardSuit getSuit() {

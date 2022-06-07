@@ -22,6 +22,8 @@ public class PokerHands {
 	private static final String highCardWin = "It was a high Card poker hand !!";
 	
 	
+	
+	
 	public String straightFlush(
 			Boolean cs1FlushFlag, Boolean cs2FlushFlag,
 			List<Integer> hand1weights, List<Integer> hand2weights,
@@ -59,13 +61,6 @@ public class PokerHands {
 			return h2Win;
 		}
 		return null;
-			
-//		if()
-//		System.out.println("Success with Straight Flush");
-//		return true;
-//		else 
-//		System.out.println("Check for a lower category");
-//		return false;
 	}
 	public String fourOfAKind(List<Integer> hand1weights, List<Integer> hand2weights,
 			Long maxValueCountcv1, Long maxValueCountcv2, Integer maxOccurredWeightcv1, 
@@ -108,16 +103,15 @@ public class PokerHands {
 		
 		System.out.println(hand2TripletValue);
 		int hand2TripletWeight = listOfPossibleCardValues.indexOf(setToEnum2);
+
 //		System.out.println(hand2TripletWeight);
-		
-//		System.out.println("jkahsbndkjsan");
 //		System.out.println(maxValueCountcv1);
 //		System.out.println(maxValueCountcv2);
 //		System.out.println(hand1TripletWeight);
 //		System.out.println(hand2TripletWeight);
-//		System.out.println("zingaaa");
 //		System.out.println(hand1PairValues);
 //		System.out.println(hand2PairValues);
+		
 		if (maxValueCountcv1 == 3 && maxValueCountcv2 != 3 && !hand1PairValues.isEmpty()) {
 			System.out.println(fullHouseWin);
 			return h1Win;
@@ -212,7 +206,72 @@ public class PokerHands {
 		return null;
 	}
 
-	public String twoPairs() {
+	public String twoPairs(
+			//Use size() of handPair Values that should be two, then compare weights and finally get the value of the card which occurs once and then compare
+			//those weights
+			Set<Object> hand1PairValues, Set<Object> hand2PairValues,
+			Set<Object> hand1SolitaryValues,Set<Object> hand2SolitaryValues,
+			List<CardValue> listOfPossibleCardValues) {
+		//System.out.println(hand1PairValues.size());
+		//System.out.println(hand2PairValues.size());
+		if(hand1PairValues.size()==2 && hand2PairValues.size()!=2) {
+			System.out.println(twoPairsWin);
+			return h1Win;
+		}
+		else if(hand1PairValues.size()!=2 && hand2PairValues.size()!=2) {
+			System.out.println(twoPairsWin);
+			return h2Win;
+		}
+		else if(hand1PairValues.size()==2 && hand2PairValues.size()==2) {
+			//System.out.println(hand1PairValues);
+			//System.out.println(hand2PairValues);
+			
+			List<Integer> hand1PairsWeights = new ArrayList<Integer>();
+			List<Integer> hand2PairsWeights = new ArrayList<Integer>();
+			Object o1 = null;
+			for (Iterator<Object> it = hand1PairValues.iterator(); it.hasNext(); ) {
+				o1 = it.next();
+				Integer temp1 = listOfPossibleCardValues.indexOf(o1);
+				hand1PairsWeights.add(temp1);
+			}
+				
+			for (Iterator<Object> it = hand2PairValues.iterator(); it.hasNext(); ) {
+				o1 = it.next();
+				Integer temp2 = listOfPossibleCardValues.indexOf(o1);
+				hand2PairsWeights.add(temp2);	
+			}
+			//System.out.println(hand1PairsWeights);
+			//System.out.println(hand2PairsWeights);
+			
+			for (int i = 1; i>=0; i--) {
+				if(hand1PairsWeights.get(i)>hand2PairsWeights.get(i)) {
+					System.out.println(twoPairsWin);
+					return h1Win;
+				}
+				else if(hand2PairsWeights.get(i)>hand1PairsWeights.get(i)) {
+					System.out.println(twoPairsWin);
+					return h2Win;
+				}
+			}
+			Object setToEnum1 = null;
+			Object setToEnum2 = null;
+			for (Iterator<Object> it = hand1SolitaryValues.iterator(); it.hasNext(); ) setToEnum1 = it.next();
+			
+			for (Iterator<Object> it = hand2SolitaryValues.iterator(); it.hasNext(); ) setToEnum2 = it.next();
+			
+			int hand1SolitaryWeight = listOfPossibleCardValues.indexOf(setToEnum1);
+			int hand2SolitaryWeight = listOfPossibleCardValues.indexOf(setToEnum2);
+			//System.out.println(hand1SolitaryWeight);
+			//System.out.println(hand2SolitaryWeight);
+			if(hand1SolitaryWeight>hand2SolitaryWeight) {
+				System.out.println(twoPairsWin);
+				return h1Win;				
+			}
+			else if(hand2SolitaryWeight>hand1SolitaryWeight) {
+				System.out.println(twoPairsWin);
+				return h2Win;
+			}
+		}
 
 		return null;
 	}
@@ -257,7 +316,6 @@ public class PokerHands {
 					hand1RemainingWeights.add(temp1);
 				}
 					
-				
 				for (Iterator<Object> it = hand2SolitaryValues.iterator(); it.hasNext(); ) {
 					o1 = it.next();
 					Integer temp2 = listOfPossibleCardValues.indexOf(o1);
@@ -279,7 +337,6 @@ public class PokerHands {
 				}	
 			}
 		}
-					
 		return null;
 	}
 	
