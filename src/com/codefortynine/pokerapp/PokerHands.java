@@ -85,10 +85,8 @@ public class PokerHands {
 	}
 	public String fullHouse(Long maxValueCountcv1, Long maxValueCountcv2, Set<Object> hand1PairValues, Set<Object> hand2PairValues,
 			Set<Object> hand1TripletValue, Set<Object> hand2TripletValue, List<CardValue> listOfPossibleCardValues) {
-/*
- * Need to check if remaining two are pairs then only works
- * 
-	 */	Object setToEnum1 = null;
+
+	 	Object setToEnum1 = null;
 		Object setToEnum2 = null;
 		
 		for (Iterator<Object> it = hand1TripletValue.iterator(); it.hasNext(); ) 
@@ -101,7 +99,7 @@ public class PokerHands {
 		int hand1TripletWeight = listOfPossibleCardValues.indexOf(setToEnum1);
 //		System.out.println(hand1TripletWeight);
 		
-		System.out.println(hand2TripletValue);
+//		System.out.println(hand2TripletValue);
 		int hand2TripletWeight = listOfPossibleCardValues.indexOf(setToEnum2);
 
 //		System.out.println(hand2TripletWeight);
@@ -218,7 +216,7 @@ public class PokerHands {
 			System.out.println(twoPairsWin);
 			return h1Win;
 		}
-		else if(hand1PairValues.size()!=2 && hand2PairValues.size()!=2) {
+		else if(hand1PairValues.size()!=2 && hand2PairValues.size()==2) {
 			System.out.println(twoPairsWin);
 			return h2Win;
 		}
@@ -240,6 +238,9 @@ public class PokerHands {
 				Integer temp2 = listOfPossibleCardValues.indexOf(o1);
 				hand2PairsWeights.add(temp2);	
 			}
+			Collections.sort(hand1PairsWeights);
+			Collections.sort(hand2PairsWeights);
+
 			//System.out.println(hand1PairsWeights);
 			//System.out.println(hand2PairsWeights);
 			
@@ -321,8 +322,8 @@ public class PokerHands {
 					Integer temp2 = listOfPossibleCardValues.indexOf(o1);
 					hand2RemainingWeights.add(temp2);	
 				}
-				System.out.println(hand1RemainingWeights);
-				System.out.println(hand2RemainingWeights);
+				//System.out.println(hand1RemainingWeights);
+				//System.out.println(hand2RemainingWeights);
 				
 				//Get weights of remaining 3 cards then literally same as high Card
 				for (int i = 2; i>=0; i--) {

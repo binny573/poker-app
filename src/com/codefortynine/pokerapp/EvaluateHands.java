@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -90,7 +89,9 @@ public class EvaluateHands {
 		Integer maxOccurredWeightcv1 = getMaxOccurredWeight(hand1Weights);
 		Integer maxOccurredWeightcv2 = getMaxOccurredWeight(hand2Weights);
 				
-		if(cv1.equals(cv2)) return tie;
+//		System.out.println(hand1Weights);
+//		System.out.println(hand2Weights);
+		if(hand1Weights.equals(hand2Weights)) return tie;
 		
 		String decision = pokerhands.straightFlush(cs1FlushFlag, cs2FlushFlag, hand1Weights, hand2Weights,
 				listsOfConsecutiveWeightsh1, listsOfConsecutiveWeightsh2);
